@@ -17,8 +17,7 @@ export const chat = async (question, name, thread = null) => {
 
         // Crear y ejecutar la corrida del asistente
         const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-            assistant_id: assistant,
-            instructions: "O nome deste usuário é: " + name
+            assistant_id: assistant
         });
 
         // Si la corrida se completa, obtén la lista de mensajes y la última respuesta del asistente
