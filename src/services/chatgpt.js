@@ -18,14 +18,14 @@ export const chat = async (question, name, thread = null) => {
         // Crear y ejecutar la corrida del asistente
         const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
             assistant_id: assistant,
-            instructions: "El nombre de este usuario es: " + name
+            instructions: "O nome deste usuário é: " + name
         });
 
         // Si la corrida se completa, obtén la lista de mensajes y la última respuesta del asistente
         if (run.status === 'completed') {
             const messages = await openai.beta.threads.messages.list(run.thread_id);
             for (const message of messages.data.reverse()) {
-                console.log(`Mensaje GS: ${message.role} > ${message.content[0].text.value}`);
+                console.log(`Mensagem GS: ${message.role} > ${message.content[0].text.value}`);
             }
             const assistantResponse = messages.data
                 .filter(message => message.role === 'assistant')
@@ -44,7 +44,7 @@ export const chat = async (question, name, thread = null) => {
         return { thread, response: null };
 
     } catch (err) {
-        console.error("Error al conectar con OpenAI:", err);
+        console.error("Erro ao conectar com OpenAI:", err);
         return { thread, response: "ERROR" };
     }
 };
